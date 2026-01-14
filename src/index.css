@@ -1,0 +1,65 @@
+:root {
+  /* Exact Colors from HTML */
+  --primary: #e7ab3c;
+  --amber-accent: #f59e0b;
+  --background-light: #fcfbf7;
+  --background-dark: #0a0a0a;
+  --accent-brown: #8A7A6F;
+  --deep-charcoal: #181511;
+  
+  /* Typography */
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  line-height: 1.6;
+  font-weight: 400;
+
+  color-scheme: light;
+  color: var(--deep-charcoal);
+  background-color: var(--background-light);
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  overflow-x: hidden;
+  width: 100%;
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+  min-height: 100vh;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  color: var(--deep-charcoal);
+  background-color: var(--background-light);
+  antialiased: true;
+  overflow-x: hidden;
+  width: 100%;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  margin: 0;
+  font-weight: 800;
+  font-family: 'Spline Sans', sans-serif;
+}
+
+p {
+  margin: 0;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+ul, ol {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}

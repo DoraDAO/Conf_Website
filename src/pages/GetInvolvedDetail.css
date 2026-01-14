@@ -1,0 +1,52 @@
+.get-involved-detail-page {
+  min-height: 100vh;
+}
+
+.get-involved-detail-hero {
+  background: linear-gradient(135deg, var(--mustard-yellow) 0%, var(--amber) 50%, var(--soft-gold) 100%);
+  color: var(--deep-charcoal);
+  padding: 4rem 2rem;
+  text-align: center;
+}
+
+.get-involved-detail-hero h1 {
+  font-size: 4rem;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  line-height: 1.1;
+}
+
+.involvement-section {
+  padding: 3rem 0;
+  border-bottom: 1px solid rgba(139, 115, 85, 0.15);
+  background: var(--warm-cream);
+}
+
+.involvement-section:last-child {
+  border-bottom: none;
+}
+
+.involvement-section h2 {
+  font-size: 2.5rem;
+  margin-bottom: 1.5rem;
+  color: var(--deep-charcoal);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+}
+
+.involvement-section p {
+  color: var(--soft-brown);
+  line-height: 1.7;
+  font-size: 1.15rem;
+  margin-bottom: 1.5rem;
+}
+
+.cta-section {
+  text-align: center;
+}
+
+@media (max-width: 768px) {
+  .get-involved-detail-hero h1 {
+    font-size: 2rem;
+  }
+}

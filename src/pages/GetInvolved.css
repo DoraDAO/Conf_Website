@@ -1,97 +1,258 @@
+/* Get Involved Page - Modern Design */
 .get-involved-page {
   min-height: 100vh;
+  background: #fbf9f5;
+  position: relative;
+  overflow-x: hidden;
+}
+
+.get-involved-page::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 400px;
+  height: 400px;
+  background: radial-gradient(circle, rgba(212, 175, 53, 0.15) 0%, transparent 70%);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 1;
 }
 
 .get-involved-hero {
-  background: linear-gradient(135deg, var(--mustard-yellow) 0%, var(--amber) 50%, var(--soft-gold) 100%);
-  color: var(--deep-charcoal);
-  padding: 4rem 2rem;
+  background: transparent;
+  color: #171612;
+  padding: 6rem 2rem 4rem;
   text-align: center;
+  position: relative;
+  z-index: 2;
+}
+
+.get-involved-hero .container {
+  max-width: 900px;
+  margin: 0 auto;
 }
 
 .get-involved-hero h1 {
   font-size: 4rem;
   margin-bottom: 1.5rem;
-  font-weight: 800;
-  letter-spacing: -0.03em;
-  line-height: 1.1;
+  font-weight: 900;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+  color: #171612;
+  font-family: 'Spline Sans', sans-serif;
+}
+
+@media (min-width: 768px) {
+  .get-involved-hero h1 {
+    font-size: 5rem;
+  }
 }
 
 .get-involved-hero .hero-description {
-  max-width: 800px;
+  max-width: 700px;
   margin: 0 auto;
-  font-size: 1.1rem;
-  opacity: 0.95;
+  font-size: 1.25rem;
+  color: rgba(23, 22, 18, 0.7);
+  line-height: 1.7;
+  font-weight: 400;
 }
 
 .involvement-options-section {
-  padding: 4rem 2rem;
-  background: var(--warm-cream);
+  padding: 2rem 2rem 6rem;
+  background: #fbf9f5;
+  position: relative;
+  z-index: 2;
 }
 
 .options-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-  gap: 2rem;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2.5rem;
+  max-width: 1400px;
+  margin: 0 auto;
 }
 
-.option-card-detailed {
-  background: var(--warm-cream);
-  border: 2px solid rgba(139, 115, 85, 0.15);
-  border-radius: 16px;
-  padding: 2.5rem;
-  transition: all 0.3s ease;
-  box-shadow: 0 2px 8px rgba(26, 26, 26, 0.05);
-}
-
-.option-card-detailed:hover {
-  transform: translateY(-6px);
-  box-shadow: 0 12px 32px rgba(244, 196, 48, 0.2);
-  border-color: var(--mustard-yellow);
-}
-
-.option-card-detailed h2 {
-  font-size: 2rem;
-  margin-bottom: 1rem;
-  color: var(--deep-charcoal);
-  font-weight: 700;
-  letter-spacing: -0.01em;
-}
-
-.option-description {
-  color: var(--soft-brown);
-  margin-bottom: 2rem;
-  line-height: 1.7;
-  font-size: 1.15rem;
-}
-
-.option-benefits {
-  margin-bottom: 2rem;
-}
-
-.benefit-block {
-  margin-bottom: 1.5rem;
-}
-
-.benefit-block h3 {
-  font-size: 1.2rem;
-  margin-bottom: 0.5rem;
-  color: var(--deep-charcoal);
-  font-weight: 600;
-}
-
-.benefit-block p {
-  color: var(--soft-brown);
-  line-height: 1.7;
-  font-size: 1.05rem;
+@media (max-width: 1024px) {
+  .options-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2rem;
+  }
 }
 
 @media (max-width: 768px) {
-  .get-involved-hero h1 {
-    font-size: 2rem;
-  }
-  
   .options-grid {
     grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+}
+
+.option-card-detailed {
+  background: white;
+  border: 1px solid rgba(23, 22, 18, 0.08);
+  border-radius: 20px;
+  padding: 3rem 2.5rem;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 12px rgba(23, 22, 18, 0.06);
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+.option-card-detailed:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 24px rgba(23, 22, 18, 0.12);
+  border-color: rgba(23, 22, 18, 0.12);
+}
+
+.option-icon-wrapper {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 2rem;
+}
+
+.option-icon {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2.5rem;
+  position: relative;
+}
+
+.option-icon-volunteer {
+  background: linear-gradient(135deg, #d4af35 0%, #eab308 100%);
+}
+
+.option-icon-partner {
+  background: linear-gradient(135deg, #d4af35 0%, #eab308 100%);
+}
+
+.option-icon-corporate {
+  background: linear-gradient(135deg, #d4af35 0%, #eab308 100%);
+}
+
+.option-card-detailed h2 {
+  font-size: 1.75rem;
+  margin-bottom: 1rem;
+  color: #171612;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+  text-align: center;
+  font-family: 'Spline Sans', sans-serif;
+}
+
+.option-description {
+  color: rgba(23, 22, 18, 0.7);
+  margin-bottom: 2rem;
+  line-height: 1.7;
+  font-size: 1.125rem;
+  text-align: center;
+  font-weight: 400;
+}
+
+.option-benefits {
+  margin-bottom: 2.5rem;
+  flex-grow: 1;
+}
+
+.benefits-title {
+  font-size: 1.125rem;
+  font-weight: 700;
+  color: #171612;
+  margin-bottom: 1rem;
+  font-family: 'Spline Sans', sans-serif;
+}
+
+.benefits-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.benefit-item {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-size: 1rem;
+  color: rgba(23, 22, 18, 0.8);
+  line-height: 1.6;
+}
+
+.checkmark {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: #d4af35;
+  color: #171612;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.75rem;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+.option-cta-button {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: rgba(212, 175, 53, 0.1);
+  color: #171612;
+  padding: 1rem 1.5rem;
+  border-radius: 12px;
+  text-decoration: none;
+  font-size: 1rem;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  border: 1px solid rgba(212, 175, 53, 0.2);
+  margin-top: auto;
+}
+
+.option-cta-button:hover {
+  background: rgba(212, 175, 53, 0.15);
+  border-color: rgba(212, 175, 53, 0.4);
+  transform: translateX(4px);
+}
+
+.arrow {
+  font-size: 1.25rem;
+  font-weight: 400;
+}
+
+@media (max-width: 768px) {
+  .get-involved-hero {
+    padding: 4rem 1.5rem 3rem;
+  }
+
+  .get-involved-hero h1 {
+    font-size: 2.5rem;
+  }
+
+  .get-involved-hero .hero-description {
+    font-size: 1.125rem;
+  }
+
+  .involvement-options-section {
+    padding: 2rem 1.5rem 4rem;
+  }
+
+  .option-card-detailed {
+    padding: 2.5rem 2rem;
+  }
+
+  .option-icon {
+    width: 70px;
+    height: 70px;
+    font-size: 2rem;
+  }
+
+  .option-card-detailed h2 {
+    font-size: 1.5rem;
   }
 }

@@ -2,7 +2,7 @@
   min-height: 100vh;
   background: #fbf9f5;
   position: relative;
-  padding-top: 6rem;
+  padding-top: 2rem;
   font-family: 'Epilogue', sans-serif;
 }
 
@@ -23,140 +23,211 @@
 .community-hero {
   max-width: 1280px;
   margin: 0 auto;
-  padding: 5rem 1.5rem;
+  padding: 4rem 1.5rem 6rem;
   position: relative;
   z-index: 10;
+  min-height: 60vh;
+  display: flex;
+  align-items: center;
 }
 
 .community-hero-container {
   position: relative;
+  width: 100%;
+  height: 100%;
 }
 
-.community-hero-content {
-  text-align: center;
-  position: relative;
-  z-index: 10;
-}
-
-.community-script-text {
-  font-family: 'Satisfy', cursive;
-  color: #d4af35;
-  font-size: 2.25rem;
-  display: block;
-  margin-bottom: 0.5rem;
+.community-hero-bg-text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 15rem;
+  font-weight: 900;
+  color: rgba(23, 22, 18, 0.04);
+  font-family: 'Epilogue', sans-serif;
+  letter-spacing: -0.02em;
+  white-space: nowrap;
+  z-index: 1;
+  pointer-events: none;
+  user-select: none;
+  text-transform: uppercase;
 }
 
 @media (min-width: 768px) {
-  .community-script-text {
-    font-size: 3.75rem;
+  .community-hero-bg-text {
+    font-size: 25rem;
   }
 }
 
+@media (min-width: 1024px) {
+  .community-hero-bg-text {
+    font-size: 30rem;
+  }
+}
+
+.community-hero-content {
+  position: relative;
+  z-index: 10;
+  max-width: 900px;
+  margin-bottom: 2rem;
+}
+
 .community-title {
-  font-size: 3.75rem;
+  font-size: 4rem;
   font-weight: 900;
-  line-height: 0.9;
-  letter-spacing: -0.02em;
-  color: var(--deep-charcoal);
-  margin-bottom: 1.5rem;
+  line-height: 1.1;
+  letter-spacing: -0.03em;
+  color: #171612;
+  margin-bottom: 2rem;
   font-family: 'Epilogue', sans-serif;
 }
 
 @media (min-width: 768px) {
   .community-title {
-    font-size: 6.25rem;
+    font-size: 6rem;
   }
 }
 
-.community-title-accent {
+@media (min-width: 1024px) {
+  .community-title {
+    font-size: 7.5rem;
+  }
+}
+
+.community-title-line1,
+.community-title-line2 {
+  color: #171612;
+  display: inline-block;
+}
+
+.community-title-script {
+  font-family: 'Satisfy', cursive;
   color: #d4af35;
-  font-style: italic;
+  font-size: 1.15em;
+  font-weight: 400;
+  display: inline-block;
+  margin-left: 0.5rem;
+}
+
+.community-title-script-alt {
+  font-family: 'Satisfy', cursive;
+  color: #eab308;
+  font-size: 1.15em;
+  font-weight: 400;
+  display: inline-block;
+  margin-left: 0.5rem;
 }
 
 .community-description {
   font-size: 1.125rem;
   color: rgba(23, 22, 18, 0.7);
-  max-width: 42rem;
-  margin: 0 auto 2rem;
+  max-width: 600px;
   line-height: 1.75;
+  font-weight: 400;
 }
 
 @media (min-width: 768px) {
   .community-description {
-    font-size: 1.5rem;
+    font-size: 1.25rem;
   }
 }
 
-.community-cta {
-  display: flex;
-  justify-content: center;
-  gap: 1rem;
-  padding-top: 2rem;
-}
-
-.community-button {
-  background: #d4af35;
-  color: white;
-  padding: 1.25rem 2.5rem;
-  border-radius: 9999px;
-  font-size: 1.125rem;
-  font-weight: 700;
+.community-hero-cta-circle {
+  position: absolute;
+  bottom: 2rem;
+  right: 2rem;
+  width: 200px;
+  height: 200px;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+  z-index: 20;
   text-decoration: none;
-  box-shadow: 0 25px 50px rgba(212, 175, 53, 0.3);
-  transition: all 0.3s;
+  display: block;
 }
 
-.community-button:hover {
-  background: #eab308;
-  transform: scale(1.02);
+.community-hero-cta-circle:hover {
+  transform: scale(1.1) rotate(5deg);
 }
 
-.community-hero-decorations {
+.circle-text {
   position: absolute;
-  inset: 0;
-  pointer-events: none;
-  z-index: 1;
-}
-
-.decoration-1 {
-  position: absolute;
-  top: 5rem;
+  top: 0;
   left: 0;
-  width: 8rem;
-  height: 8rem;
-  opacity: 0.2;
-  transform: rotate(-12deg) translateX(-20%);
-  border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
-  background-size: cover;
-  background-position: center;
-  background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBuSKJkV74Xvgpv7cC4_JQ8KxzQHoC9KexHHfQy8D2TWiCRNF49xhCAmXXoPbcnmAdXUac7yn3d97sPITxV0aDDvhmr12y0gN0YhSPqD1xTDLkF_w91ISqaB_OkkGGiX4bWOGgaESRkmoOnF3mQKYx0c9Arsq0tOV84ytUc39RkZ2PoouKJerLBGjPsoOvaqjh-h1hcDuApJsSxcTmoJhR0P522Nj5MusEeONREoQKd7nIl_mmMzS3yc4iCL_O7w8p8gyFAoounEhK9');
+  width: 100%;
+  height: 100%;
+  animation: rotate 20s linear infinite;
 }
 
-@media (min-width: 768px) {
-  .decoration-1 {
-    width: 14rem;
-    height: 14rem;
+@keyframes rotate {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
   }
 }
 
-.decoration-2 {
+.circle-arrow {
   position: absolute;
-  bottom: 2.5rem;
-  right: 0;
-  width: 10rem;
-  height: 10rem;
-  opacity: 0.2;
-  transform: rotate(6deg) translateX(20%);
-  border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
-  background-size: cover;
-  background-position: center;
-  background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDWZnXhQvEfB7ThPSE8ypDTVO_FO6xNr-KlbNmzWtLdrOs73ENj8bM4UpCjw434oi-mu2rtvCk6AiwrTPKfUrKBBAey2vuohA5u5IVE-AVqnjgTaMMzpKo74GvgiifpzUo9N8jSs_fuX9Z2f7i5ncaR5_lEoizUfmUH2DmjZPyUqxABpPvNvvjGEqNmKhcxVBqV73Sirs5-CAYQJXS9RiIzxrn8jfTovm6ARm4rx-Y9FOKFCU_uRdRHHGDE5yU7I4lFJ2v8KlbRc4r0');
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 60px;
+  height: 60px;
+  background: #d4af35;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 12px rgba(212, 175, 53, 0.3);
+  transition: all 0.3s ease;
 }
 
-@media (min-width: 768px) {
-  .decoration-2 {
-    width: 16rem;
-    height: 16rem;
+.community-hero-cta-circle:hover .circle-arrow {
+  background: #eab308;
+  transform: translate(-50%, -50%) scale(1.1);
+}
+
+.circle-arrow .material-symbols-outlined {
+  color: white;
+  font-size: 24px;
+  font-weight: 700;
+}
+
+@media (max-width: 768px) {
+  .community-hero {
+    padding: 3rem 1.5rem 4rem;
+    min-height: 50vh;
+  }
+  
+  .community-hero-bg-text {
+    font-size: 15rem;
+  }
+  
+  .community-hero-cta-circle {
+    width: 150px;
+    height: 150px;
+    bottom: 1rem;
+    right: 1rem;
+  }
+  
+  .community-hero-cta-circle svg {
+    width: 150px;
+    height: 150px;
+  }
+  
+  .circle-arrow {
+    width: 50px;
+    height: 50px;
+  }
+  
+  .circle-arrow .material-symbols-outlined {
+    font-size: 20px;
+  }
+  
+  .community-hero-cta-circle svg text {
+    font-size: 10px !important;
   }
 }
 
@@ -215,7 +286,7 @@
 
 /* Section Styles */
 .community-section {
-  padding: 6rem 1.5rem;
+  padding: 4rem 1.5rem;
   max-width: 1280px;
   margin: 0 auto;
   position: relative;

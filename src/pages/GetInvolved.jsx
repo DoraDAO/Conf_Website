@@ -6,30 +6,35 @@ function GetInvolved() {
     {
       id: 'volunteer',
       title: 'Volunteer with Us',
+      icon: '❤️',
       description: 'Contribute your time and skills to help build DoraDAO',
-      whatYouGain: 'Experience, networking, recognition, and impact',
-      whatWeGain: 'Your expertise and passion to drive our mission forward',
+      benefits: [
+        'Gain hands-on experience',
+        'Connect with a passionate community'
+      ],
+      buttonText: 'Learn More',
     },
     {
       id: 'partner',
       title: 'Become a Partner',
+      icon: '🤝',
       description: 'Partner with DoraDAO to support innovation and access top talent',
-      whatYouGain: 'Access to talent, brand visibility, innovation opportunities',
-      whatWeGain: 'Resources, expertise, and expanded reach',
+      benefits: [
+        'Access top talent and resources',
+        'Enhance your brand visibility'
+      ],
+      buttonText: 'Partner with Us',
     },
     {
       id: 'corporate',
       title: 'Corporate Opportunities',
+      icon: '💼',
       description: 'Explore corporate partnerships and sponsorship opportunities',
-      whatYouGain: 'Brand association, talent pipeline, innovation insights',
-      whatWeGain: 'Funding, resources, and corporate expertise',
-    },
-    {
-      id: 'donate',
-      title: 'Donate / Support',
-      description: 'Support DoraDAO financially to help us grow and scale',
-      whatYouGain: 'Impact, recognition, tax benefits',
-      whatWeGain: 'Resources to expand programs and reach',
+      benefits: [
+        'Customized partnership solutions',
+        'Reach a global Web3 ecosystem'
+      ],
+      buttonText: 'Explore Options',
     },
   ];
 
@@ -39,7 +44,7 @@ function GetInvolved() {
         <div className="container">
           <h1>Get Involved</h1>
           <p className="hero-description">
-            There are many ways to get involved with DoraDAO. Choose the path that fits your goals and interests.
+            Choose the path that fits your goals and interests.
           </p>
         </div>
       </section>
@@ -49,20 +54,27 @@ function GetInvolved() {
           <div className="options-grid">
             {options.map((option) => (
               <div key={option.id} className="option-card-detailed">
+                <div className="option-icon-wrapper">
+                  <div className={`option-icon option-icon-${option.id}`}>
+                    {option.icon}
+                  </div>
+                </div>
                 <h2>{option.title}</h2>
                 <p className="option-description">{option.description}</p>
                 <div className="option-benefits">
-                  <div className="benefit-block">
-                    <h3>What You Gain</h3>
-                    <p>{option.whatYouGain}</p>
-                  </div>
-                  <div className="benefit-block">
-                    <h3>What DoraDAO Gains</h3>
-                    <p>{option.whatWeGain}</p>
-                  </div>
+                  <h3 className="benefits-title">What You Gain</h3>
+                  <ul className="benefits-list">
+                    {option.benefits.map((benefit, index) => (
+                      <li key={index} className="benefit-item">
+                        <span className="checkmark">✓</span>
+                        <span>{benefit}</span>
+                      </li>
+                    ))}
+                  </ul>
                 </div>
-                <Link to={`/get-involved/${option.id}`} className="btn-primary">
-                  Learn More
+                <Link to={`/get-involved/${option.id}`} className="option-cta-button">
+                  <span>{option.buttonText}</span>
+                  <span className="arrow">→</span>
                 </Link>
               </div>
             ))}

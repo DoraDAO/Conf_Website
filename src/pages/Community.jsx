@@ -6,25 +6,32 @@ function Community() {
       {/* Hero Section */}
       <section className="community-hero">
         <div className="community-hero-container">
+          <div className="community-hero-bg-text">COMMUNITY</div>
           <div className="community-hero-content">
-            <span className="community-script-text">People over Programs</span>
             <h1 className="community-title">
-              COMMUNITY <br/>
-              <span className="community-title-accent">FIRST.</span>
+              <span className="community-title-line1">Empowering</span> <span className="community-title-script">Community</span>
+              <br/>
+              <span className="community-title-line2">Enabling</span> <span className="community-title-script-alt">Connection</span>
             </h1>
             <p className="community-description">
               A cohesive ecosystem designed to support your journey from campus to career, creation, and beyond.
             </p>
-            <div className="community-cta">
-              <a href="#groups-overview" className="community-button">
-                Discover Your Circle
-              </a>
+          </div>
+          <a href="#groups-overview" className="community-hero-cta-circle">
+            <svg className="circle-text" viewBox="0 0 200 200" width="200" height="200">
+              <defs>
+                <path id="circle" d="M 100, 100 m -75, 0 a 75,75 0 1,1 150,0 a 75,75 0 1,1 -150,0" />
+              </defs>
+              <text fill="#171612" fontSize="12" fontFamily="Epilogue, sans-serif" fontWeight="700">
+                <textPath href="#circle" startOffset="0%">
+                  Discover Your Circle • Discover Your Circle • 
+                </textPath>
+              </text>
+            </svg>
+            <div className="circle-arrow">
+              <span className="material-symbols-outlined">arrow_forward</span>
             </div>
-          </div>
-          <div className="community-hero-decorations">
-            <div className="decoration-1"></div>
-            <div className="decoration-2"></div>
-          </div>
+          </a>
         </div>
       </section>
 

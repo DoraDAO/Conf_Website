@@ -1,109 +1,232 @@
+/* Partners Page - Modern Design */
 .partners-page {
   min-height: 100vh;
+  background: #fbf9f5;
+  position: relative;
+  overflow-x: hidden;
+}
+
+.partners-page::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 1;
+  opacity: 0.03;
+  background-image: 
+    radial-gradient(circle at 20% 30%, rgba(212, 175, 53, 0.1) 0%, transparent 50%),
+    radial-gradient(circle at 80% 70%, rgba(234, 179, 8, 0.08) 0%, transparent 50%);
 }
 
 .partners-hero {
-  background: linear-gradient(135deg, var(--mustard-yellow) 0%, var(--amber) 50%, var(--soft-gold) 100%);
-  color: var(--deep-charcoal);
-  padding: 4rem 2rem;
+  background: linear-gradient(135deg, #d4af35 0%, #eab308 50%, #f4c430 100%);
+  padding: 8rem 2rem 6rem;
   text-align: center;
+  position: relative;
+  z-index: 2;
+  overflow: hidden;
+}
+
+.partners-hero::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: 
+    radial-gradient(circle at 20% 30%, rgba(255, 255, 255, 0.1) 0%, transparent 50%),
+    radial-gradient(circle at 80% 70%, rgba(255, 255, 255, 0.08) 0%, transparent 50%);
+  pointer-events: none;
+}
+
+.partners-hero .container {
+  max-width: 900px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 2;
+}
+
+.partners-label {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #171612;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-bottom: 1.5rem;
+  font-family: 'Spline Sans', sans-serif;
 }
 
 .partners-hero h1 {
-  font-size: 4rem;
-  margin-bottom: 1.5rem;
-  font-weight: 800;
-  letter-spacing: -0.03em;
-  line-height: 1.1;
+  font-size: 3.5rem;
+  font-weight: 900;
+  color: #171612;
+  margin-bottom: 2rem;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  font-family: 'Spline Sans', sans-serif;
+  text-shadow: 0 2px 20px rgba(23, 22, 18, 0.1);
+}
+
+@media (min-width: 768px) {
+  .partners-hero h1 {
+    font-size: 4.5rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .partners-hero h1 {
+    font-size: 5.5rem;
+  }
 }
 
 .partners-hero .hero-description {
+  font-size: 1.125rem;
+  color: #171612;
+  line-height: 1.7;
+  font-weight: 400;
   max-width: 800px;
   margin: 0 auto;
-  font-size: 1.1rem;
-  opacity: 0.95;
+}
+
+@media (min-width: 768px) {
+  .partners-hero .hero-description {
+    font-size: 1.25rem;
+  }
 }
 
 .partners-content {
-  padding: 4rem 2rem;
-  background: var(--warm-cream);
+  padding: 4rem 2rem 6rem;
+  position: relative;
+  z-index: 2;
 }
 
-.partners-info {
+.partners-content .container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.partners-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
   margin-bottom: 4rem;
 }
 
-.partners-info h2 {
-  font-size: 3rem;
-  margin-bottom: 2rem;
-  text-align: center;
-  color: var(--deep-charcoal);
-  font-weight: 800;
-  letter-spacing: -0.02em;
-}
-
-.benefits-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 2rem;
-}
-
-.benefit-card {
-  background: var(--warm-cream);
-  border: 2px solid rgba(139, 115, 85, 0.15);
-  border-radius: 16px;
-  padding: 2.5rem;
-  text-align: center;
-  transition: all 0.3s ease;
-  box-shadow: 0 2px 8px rgba(26, 26, 26, 0.05);
-}
-
-.benefit-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 8px 24px rgba(244, 196, 48, 0.2);
-  border-color: var(--mustard-yellow);
-}
-
-.benefit-card h3 {
-  font-size: 1.75rem;
-  margin-bottom: 1rem;
-  color: var(--mustard-yellow);
-  font-weight: 700;
-}
-
-.benefit-card p {
-  color: var(--soft-brown);
-  line-height: 1.7;
-  font-size: 1.05rem;
-}
-
-.partners-cta {
-  text-align: center;
-  padding: 3.5rem;
-  background: var(--muted-beige);
-  border-radius: 16px;
-  border: 2px solid rgba(139, 115, 85, 0.15);
-}
-
-.partners-cta h2 {
-  font-size: 2.5rem;
-  margin-bottom: 1rem;
-  color: var(--deep-charcoal);
-  font-weight: 800;
-}
-
-.partners-cta p {
-  font-size: 1.2rem;
-  color: var(--soft-brown);
-  margin-bottom: 2rem;
+@media (max-width: 1024px) {
+  .partners-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+  }
 }
 
 @media (max-width: 768px) {
-  .partners-hero h1 {
-    font-size: 2rem;
-  }
-  
-  .benefits-grid {
+  .partners-grid {
     grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+}
+
+.partner-logo-card {
+  background: white;
+  border-radius: 16px;
+  padding: 2.5rem 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 140px;
+  box-shadow: 0 4px 20px rgba(23, 22, 18, 0.1);
+  transition: all 0.3s ease;
+  border: 1px solid rgba(23, 22, 18, 0.05);
+}
+
+.partner-logo-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 32px rgba(23, 22, 18, 0.15);
+}
+
+.partner-logo {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  max-width: 180px;
+  max-height: 80px;
+  filter: grayscale(0);
+  transition: all 0.3s ease;
+}
+
+.partner-logo-card:hover .partner-logo {
+  transform: scale(1.05);
+  filter: grayscale(0);
+}
+
+.partner-logo-fallback {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #171612;
+  text-align: center;
+  font-family: 'Spline Sans', sans-serif;
+}
+
+@media (min-width: 768px) {
+  .partner-logo {
+    max-width: 200px;
+    max-height: 100px;
+  }
+}
+
+.partners-cta-button {
+  text-align: center;
+  margin-top: 3rem;
+}
+
+.partner-cta-btn {
+  display: inline-block;
+  background: linear-gradient(135deg, #d4af35 0%, #eab308 100%);
+  color: #171612;
+  padding: 1.25rem 3rem;
+  border-radius: 12px;
+  font-size: 1.125rem;
+  font-weight: 700;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  font-family: 'Spline Sans', sans-serif;
+  box-shadow: 0 4px 16px rgba(212, 175, 53, 0.3);
+}
+
+.partner-cta-btn:hover {
+  background: linear-gradient(135deg, #eab308 0%, #f4c430 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 24px rgba(212, 175, 53, 0.4);
+}
+
+@media (max-width: 768px) {
+  .partners-hero {
+    padding: 4rem 1.5rem 3rem;
+  }
+
+  .partners-hero h1 {
+    font-size: 2.5rem;
+  }
+
+  .partners-hero .hero-description {
+    font-size: 1rem;
+  }
+
+  .partners-content {
+    padding: 3rem 1.5rem 4rem;
+  }
+
+  .partner-logo-card {
+    padding: 2rem 1.5rem;
+    min-height: 120px;
+  }
+
+  .partner-cta-btn {
+    padding: 1rem 2.5rem;
+    font-size: 1rem;
   }
 }

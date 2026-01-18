@@ -1,7 +1,101 @@
 import { Link } from 'react-router-dom';
+import { useState, useEffect, useRef } from 'react';
 import './Home.css';
 
 function Home() {
+  const [scrollY, setScrollY] = useState(0);
+  const [isVisible, setIsVisible] = useState(false);
+  const scrollContainerRef = useRef(null);
+  const scrollAnimationRef = useRef(null);
+
+  useEffect(() => {
+    let ticking = false;
+
+    const handleScroll = () => {
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          const scrollPosition = window.scrollY;
+          setScrollY(scrollPosition);
+          
+          const heroSection = document.querySelector('.hero-section');
+          if (heroSection) {
+            const rect = heroSection.getBoundingClientRect();
+            const viewportHeight = window.innerHeight;
+            setIsVisible(rect.top < viewportHeight && rect.bottom > 0);
+          }
+          
+          ticking = false;
+        });
+        ticking = true;
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    handleScroll(); // Initial check
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  // Auto-scroll functionality for programs gallery
+  useEffect(() => {
+    let animationFrameId = null;
+    const scrollSpeed = 1.5;
+    let isScrolling = false;
+
+    const scroll = () => {
+      const container = scrollContainerRef.current;
+      if (!container) {
+        animationFrameId = requestAnimationFrame(scroll);
+        return;
+      }
+      
+      const gallery = container.querySelector('.programs-scroll-gallery');
+      if (!gallery) {
+        animationFrameId = requestAnimationFrame(scroll);
+        return;
+      }
+
+      // Check if container is actually scrollable
+      const canScroll = gallery.scrollWidth > container.clientWidth;
+      if (!canScroll || gallery.scrollWidth === 0) {
+        animationFrameId = requestAnimationFrame(scroll);
+        return;
+      }
+
+      const totalWidth = gallery.scrollWidth;
+      const singleSetWidth = totalWidth / 2;
+      let currentScroll = container.scrollLeft;
+      
+      if (currentScroll >= singleSetWidth - 10) {
+        container.scrollLeft = 0;
+      } else {
+        container.scrollLeft = currentScroll + scrollSpeed;
+      }
+      
+      isScrolling = true;
+      animationFrameId = requestAnimationFrame(scroll);
+    };
+
+    // Start scrolling - try multiple times to ensure it starts
+    const startScrolling = () => {
+      if (!isScrolling) {
+        animationFrameId = requestAnimationFrame(scroll);
+      }
+    };
+
+    // Start after delays to ensure DOM is ready
+    const timeout1 = setTimeout(startScrolling, 300);
+    const timeout2 = setTimeout(startScrolling, 1000);
+    const timeout3 = setTimeout(startScrolling, 2000);
+
+    return () => {
+      clearTimeout(timeout1);
+      clearTimeout(timeout2);
+      clearTimeout(timeout3);
+      if (animationFrameId) {
+        cancelAnimationFrame(animationFrameId);
+      }
+    };
+  }, []);
   const programs = [
     {
       id: 1,
@@ -11,7 +105,7 @@ function Home() {
       audience: 'Women creators, founders, storytellers, community builders',
       type: 'image',
       bgColor: 'dark',
-      image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuAVfNFOXv6O8DINPPrTNdkCeQ-B9eAEGQA0etQ20FH7tLpfCaLMiWjNB3glgOXfsQ2JODnTSbGuIn6AvOU7Ov3MSIhh6naHSUwNXA8yaMMXma3IeesqYULJ1JOqu97zWaw5s9Qgh0aeKr1wtbFe6cI2tkOpx4CQLBP2ZEkQ80XnsU7XqQlfxAXACBgCyB3f_mmvu-pSStInxPsX2Hnx7D5FFub8rjNkk5lwMauUfVHX6soronTzJZhhaDrSGH10NuHU6lzerzqRZVI3'
+      image: 'https://www.notion.so/image/attachment%3Aa26605a1-477b-4a63-96fe-707f986d41f4%3AGWY_CONF-2.png?table=block&id=2ded8cf9-6e75-8183-bd25-f1ebaa1c7f99&spaceId=ed3c5042-1ff5-40df-936f-6a222ed4453a&width=1960&userId=&cache=v2'
     },
     {
       id: 2,
@@ -19,8 +113,9 @@ function Home() {
       name: 'Girls Who Yap (Community Program)',
       description: 'An ongoing community layer beyond the conference — focused on conversations, collaboration, visibility, leadership, and women-led ideas.',
       audience: 'Women creators at any stage',
-      type: 'dark',
-      bgColor: 'dark'
+      type: 'image',
+      bgColor: 'dark',
+      image: 'https://www.notion.so/image/attachment%3A5b69da9f-fd2f-471c-bf4a-ddd916d56737%3ABeige_and_Red_Orange_Modern_Project_Proposal_Presentation-3.png?id=2ded8cf9-6e75-815b-bb86-f79c31c4c90a&table=block&spaceId=ed3c5042-1ff5-40df-936f-6a222ed4453a&width=1960&userId=&cache=v2'
     },
     {
       id: 3,
@@ -28,8 +123,9 @@ function Home() {
       name: 'DoraHacks',
       description: 'Hackathons and build-sprints designed to connect Indian talent with global Web3, AI, and open-innovation opportunities.',
       audience: 'Builders, developers, early-stage experimenters',
-      type: 'dark',
-      bgColor: 'dark'
+      type: 'image',
+      bgColor: 'dark',
+      image: 'https://www.notion.so/image/attachment%3A4113cb3a-ac01-45f4-83f5-7d69e84d0714%3AGIRLS_WHO_YAP-3.png?id=2ded8cf9-6e75-8156-a19e-ff97a7fa27aa&table=block&spaceId=ed3c5042-1ff5-40df-936f-6a222ed4453a&width=1960&userId=&cache=v2'
     },
     {
       id: 4,
@@ -39,7 +135,7 @@ function Home() {
       audience: 'Researchers, advanced builders, technical explorers',
       type: 'image-dark',
       bgColor: 'dark',
-      image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuCB_H2KwE1cFVcL4yP3cd60imGXMN_uu2sKVzUO91uhyhjSG8geejO1hEIbfEknBpgX5o3QbzFRrIH8UY8mVkF6-_YxCVQZo2Kp2PAryUU2q2RCDUzdTxN3R_Y8fOYsDw8Af2yHZ7wh9NSjm9bX-xKsj6npJ6T9zaBxNOkIiaRp35-fqO5JCe7Vx4LcXlp2nbjRQHZmEUIcOjHHefhVrO2TIu74JlocVIQoOxNjx2R9q-Z_-ao688_q2JbOUyOy1BMzoiay9ExUBY-K'
+      image: 'https://www.notion.so/image/attachment%3A143d8827-68d9-4b51-973b-6834fbf76052%3ABeige_and_Red_Orange_Modern_Project_Proposal_Presentation.png?id=2ded8cf9-6e75-813a-9309-c356d557c341&table=block&spaceId=ed3c5042-1ff5-40df-936f-6a222ed4453a&width=1960&userId=&cache=v2'
     },
     {
       id: 5,
@@ -47,9 +143,9 @@ function Home() {
       name: 'OPEN SOURCE & PUBLIC GOODS',
       description: 'An initiative focused on open-source projects, public goods, and community-led tooling, encouraging ownership and long-term contribution.',
       audience: 'Contributors, developers, ecosystem builders',
-      type: 'dark-icon',
+      type: 'image',
       bgColor: 'dark',
-      icon: 'view_module'
+      image: 'https://images.unsplash.com/photo-1446776653964-20c1d3a81b06?w=1960&q=80'
     },
     {
       id: 6,
@@ -59,7 +155,7 @@ function Home() {
       audience: 'Creators, founders, community leaders',
       type: 'image',
       bgColor: 'dark',
-      image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuARON1Ha_r9Tz2FuK0piC6h4-gOh_e3h4Adqzlr9cUodS0geLcRFoD9iuIzXcNZoUoSr4gT_-X-Wds1rF2Lz0sfH2fBmgvhocU1vnlOxBSARpfR9xhk2UxQQlXd-ej_XRRMhB_ZFKyr9Bh9xD9JOHMNnPx2sqLUTi3lnFUJz1ginOcDkEBaLMaEbJnFd0ITGOwOchfhobwbOuhAq_hlSghTul_mMYKGhCzWu-82QsPK_ZXbd4H2GQOyYzMKKxczUypE9yWRIVgvTbRS'
+      image: 'https://www.notion.so/image/attachment%3Ad7fa826c-e785-49b9-88a4-82118386602d%3ACertificate_Of_Completetion.png?table=block&id=2dfd8cf9-6e75-8040-aecd-ca41c6952e37&spaceId=ed3c5042-1ff5-40df-936f-6a222ed4453a&width=1960&userId=&cache=v2'
     },
     {
       id: 7,
@@ -67,8 +163,9 @@ function Home() {
       name: 'Build With DoraDAO (Ecosystem Experiments)',
       description: 'A sandbox for new initiatives, pilots, and collaborations — allowing DoraDAO to experiment, validate, and scale ideas with the community.',
       audience: 'Early-stage founders, community builders, partners',
-      type: 'dark',
-      bgColor: 'dark'
+      type: 'image',
+      bgColor: 'dark',
+      image: 'https://www.notion.so/image/attachment%3Ade3dbafe-7e3a-47ef-b6f4-9204d8922a38%3ADeck-4.png?id=2ded8cf9-6e75-8112-b918-f125c4d7e21b&table=block&spaceId=ed3c5042-1ff5-40df-936f-6a222ed4453a&width=1960&userId=&cache=v2'
     },
   ];
 
@@ -90,6 +187,34 @@ function Home() {
     },
   ];
 
+  const partners = [
+    { name: 'DoraDAO', logo: '/partners/doradao.png' },
+    { name: 'Google', logo: '/partners/google.png' },
+    { name: 'Microsoft', logo: '/partners/microsoft.png' },
+    { name: 'GitHub', logo: '/partners/github.png' },
+    { name: 'AWS', logo: '/partners/aws.png' },
+    { name: 'Meta', logo: '/partners/meta.png' },
+    { name: 'Stripe', logo: '/partners/stripe.png' },
+    { name: 'Vercel', logo: '/partners/vercel.png' },
+    { name: 'Netlify', logo: '/partners/netlify.png' },
+    { name: 'MongoDB', logo: '/partners/mongodb.png' },
+    { name: 'Postman', logo: '/partners/postman.png' },
+    { name: 'Figma', logo: '/partners/figma.png' },
+    { name: 'Notion', logo: '/partners/notion.png' },
+    { name: 'Linear', logo: '/partners/linear.png' },
+    { name: 'Cloudflare', logo: '/partners/cloudflare.png' },
+    { name: 'Twilio', logo: '/partners/twilio.png' },
+    { name: 'SendGrid', logo: '/partners/sendgrid.png' },
+    { name: 'Auth0', logo: '/partners/auth0.png' },
+    { name: 'Okta', logo: '/partners/okta.png' },
+    { name: 'Databricks', logo: '/partners/databricks.png' },
+    { name: 'Snowflake', logo: '/partners/snowflake.png' },
+    { name: 'Tableau', logo: '/partners/tableau.png' },
+    { name: 'Looker', logo: '/partners/looker.png' },
+    { name: 'Segment', logo: '/partners/segment.png' },
+    { name: 'Polygon', logo: '/partners/polygon.png' },
+  ];
+
   return (
     <div className="home">
       {/* Floating Background Shapes */}
@@ -101,37 +226,39 @@ function Home() {
 
       {/* Hero Section */}
       <section className="hero-section">
+        <div className="hero-background-text">Girls Who Yap</div>
         <div className="container hero-container">
           <div className="hero-content-left">
-            <div className="hero-badge-top">
-              <span className="coming-soon">Coming March 2026</span>
-            </div>
             <h1 className="hero-title">
-              <span className="hero-title-main">Girls Who</span> <br/>
-              <span className="text-primary">Yap</span>
-              <span className="hero-title-conf">Conf</span>
+              <div className="hero-title-line">
+                <span className="hero-title-girls">Girls</span>
+              </div>
+              <div className="hero-title-line">
+                <span className="hero-title-who">Who</span>{' '}
+                <span className="hero-title-yap">Yap</span>
+              </div>
             </h1>
             <p className="hero-description">
-              The intersection of culture, tech, and the art of conversation. A space for creators to <span className="text-primary italic">redefine the future</span>, powered by DoraDAO.
+              Welcome to Girls Who Yap! Join one of India's most thriving communities to build groundbreaking solutions, inspire problem-solvers, and grow together in a diverse, supportive environment powered by DoraDAO.
             </p>
-            <div className="hero-cta">
-              <button className="btn-primary-large">Explore Programs</button>
-              <button className="btn-secondary-large">Join DoraDAO</button>
-            </div>
           </div>
-          <div className="hero-image-right">
-            <div className="hero-image-wrapper film-grain">
-              <img 
-                alt="Crowd" 
-                className="hero-image" 
-                src="https://lh3.googleusercontent.com/aida-public/AB6AXuAVf9T7-_KpBL5EPJ2JUDsZScNuZ9K4GVwzXvvXVeKH3P-zvZOQtAzyzpBKFjFNafzJPBEvjhFj6Jsn6BPtaVbKJl9FkjJEEdP25BaEswqnS87cxOJTAjS_f5bm9FXWPHuLqaMHpBY7zqaK1qJh1r5wueZSZF990s9EnaxMEitQgLbgn14ZZSL1aSEVZ4nEj3-bYb7LJM0NkAEUaP-aXkDgsKPJo3tCglbqz5-uQr6NJMpi53KroVhDsnlfMuAcJOgsdzNV7b_zVtOU"
-              />
-              <div className="hero-gradient-overlay"></div>
-            </div>
-            <div className="hero-badge">
-              <p className="badge-year">2026</p>
-              <p className="badge-text">The Year of Voice</p>
-            </div>
+          <div 
+            className="hero-accent-circle"
+            style={{
+              transform: `translateY(${Math.min(scrollY * 0.4, 200)}px) translateX(${Math.sin(scrollY * 0.01) * 20}px) rotate(${scrollY * 0.15}deg) scale(${Math.max(1 - scrollY * 0.0008, 0.7)})`,
+              opacity: isVisible ? Math.max(1 - scrollY * 0.0015, 0.3) : 0.5,
+              filter: `blur(${Math.min(scrollY * 0.01, 3)}px)`
+            }}
+          >
+            <img 
+              src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQPcMfyIrX0OFbqlU3_yRaiIj9gRYtoPILNGQ&s"
+              alt="Three faceless women with microphone"
+              className="hero-circle-image"
+              onError={(e) => {
+                e.target.style.display = 'none';
+              }}
+            />
+            <div className="circle-overlay"></div>
           </div>
         </div>
       </section>
@@ -145,8 +272,8 @@ function Home() {
               <span className="section-label">Our Ecosystem</span>
             </div>
             <h2 className="powered-by-title">
-              Powered by <br/>
-              <span className="text-primary italic script-font">DoraDAO</span>
+              We are not just a <br/>
+              <span className="text-primary italic script-font">community</span>
             </h2>
             <p className="powered-by-description">
               DoraDAO is the decentralized autonomous organization building the infrastructure for community-led movements. We're more than a conference; we're a permanent home for the next generation of female tech pioneers.
@@ -181,53 +308,92 @@ function Home() {
 
       {/* Our Programs Section */}
       <section className="programs-section">
-        <div className="container">
-          <div className="programs-header">
-            <div className="programs-header-left">
-              <h2 className="programs-title">
-                The 7 DoraDAO <br/>
-                <span className="text-primary">Programs</span>
-              </h2>
-              <p className="programs-subtitle">Curated tracks designed to elevate every type of creator in the ecosystem.</p>
-            </div>
-            <button className="view-schedule-btn">
-              View Schedule <span className="material-symbols-outlined arrow-icon">arrow_forward</span>
-            </button>
-          </div>
-          <div className="programs-grid">
-            {programs.map((program) => (
-              <div key={program.id} className={`program-card program-card-${program.bgColor}`}>
-                {program.type === 'image' && (
-                  <div className="program-image-bg" style={{backgroundImage: `linear-gradient(0deg, rgba(0,0,0,0.8), transparent), url("${program.image || 'https://lh3.googleusercontent.com/aida-public/AB6AXuDt94Y6vbQSrXZcigUsnn59U_96zkYUXltfGeOWZGdZl1vzuFWIC2F33DBYDPl-_Lz-6yP87G70m-Olf3LIvM3x8fbyPCXWniIHqySMbVsxknZkiOs4aTl4VqUMb-uI4Pzu9wqJbrzBlLDvTaGcU_TJSX5pQoRDWl3IFl05YtkIYbWd6X6AIBgxLbdCjjBXShK_gKajk4bGw90AtEs_URRfMTGQUonm0xLmiYUKPsdswN2mw8OaL12o1Z2e4hjtosFsG6wMepvzFkY_'}")`, backgroundSize: 'cover', backgroundPosition: 'center', backgroundRepeat: 'no-repeat'}}>
-                    <span className="program-track">{program.track}</span>
-                    <h3>{program.name}</h3>
-                    <p className="program-description">{program.description}</p>
-                  </div>
-                )}
-                {program.type === 'image-dark' && (
-                  <div className="program-image-bg" style={{backgroundImage: `linear-gradient(0deg, rgba(0,0,0,0.8), transparent), url("${program.image || 'https://lh3.googleusercontent.com/aida-public/AB6AXuD1R6eQYF_3oyAcxmxQ9VKFESq5N4LvaskfrqOHwn7ZAYHD1JP1jTE8V6hDSNJOB1dlGyPKFD-3D5zgizENrc1urMVB1T-DXOh2RyKT4HU9Z59OXr3oeHfkydsigRZriAmeAOEQBGzVqmwq60MD8R_eEL3E7e3o2fV6-jd00WlvSflgKmmXWzFAVUrJTg8u3PHdRQyKtqPJMWSJWZHLPmOlhh58eZilDlAkaj-USZf4q9op9n7kESmz5q7fYg7dGxAuDAhcuS_FTy00'}")`, backgroundSize: 'cover', backgroundPosition: 'center', backgroundRepeat: 'no-repeat'}}>
-                    <span className="program-track">{program.track}</span>
-                    <h3>{program.name}</h3>
-                    {program.description && <p className="program-description">{program.description}</p>}
-                  </div>
-                )}
-                {program.type === 'dark' && (
-                  <>
-                    <span className="program-track">{program.track}</span>
-                    <h3>{program.name}</h3>
-                    {program.description && <p className="program-description">{program.description}</p>}
-                  </>
-                )}
-                {program.type === 'dark-icon' && (
-                  <>
-                    <span className="material-symbols-outlined program-icon-medium">{program.icon}</span>
-                    <span className="program-track">{program.track}</span>
-                    <h3>{program.name}</h3>
-                    {program.description && <p className="program-description">{program.description}</p>}
-                  </>
-                )}
+        <div className="programs-content-wrapper">
+          <div className="container programs-header-container">
+            <div className="programs-header">
+              <div className="programs-header-left">
+                <h2 className="programs-title">The 7 Programs</h2>
+                <p className="programs-description">
+                  Curated tracks designed to elevate every type of creator in the ecosystem. From conferences to hackathons, community programs to open source initiatives, we provide diverse opportunities for women to build, innovate, and lead in tech.
+                </p>
+                <div className="programs-cta">
+                  <button className="programs-explore-btn">Explore Now</button>
+                  <button className="programs-arrow-btn">
+                    <span className="material-symbols-outlined">arrow_upward</span>
+                  </button>
+                </div>
               </div>
-            ))}
+            </div>
+          </div>
+          <div className="programs-scroll-container" ref={scrollContainerRef}>
+            <div className="programs-scroll-gallery">
+              {/* First set of programs */}
+              {programs.map((program) => (
+                <Link 
+                  key={program.id} 
+                  to="/programs"
+                  className="program-scroll-card"
+                >
+                  {program.image ? (
+                    <>
+                      <img 
+                        src={program.image} 
+                        alt={program.name}
+                        className="program-scroll-image"
+                      />
+                      <div className="program-scroll-overlay"></div>
+                      <div className="program-scroll-content">
+                        <span className="program-scroll-track">{program.track}</span>
+                        <h3 className="program-scroll-name">{program.name}</h3>
+                        <p className="program-scroll-description">{program.description}</p>
+                        <span className="program-scroll-audience">{program.audience}</span>
+                      </div>
+                    </>
+                  ) : (
+                    <div className="program-scroll-placeholder">
+                      <span className="material-symbols-outlined program-placeholder-icon">{program.icon || 'groups'}</span>
+                      <span className="program-track">{program.track}</span>
+                      <h3 className="program-placeholder-title">{program.name}</h3>
+                      <p className="program-scroll-description">{program.description}</p>
+                      <span className="program-scroll-audience">{program.audience}</span>
+                    </div>
+                  )}
+                </Link>
+              ))}
+              {/* Duplicate set for seamless loop */}
+              {programs.map((program) => (
+                <Link 
+                  key={`${program.id}-duplicate`} 
+                  to="/programs"
+                  className="program-scroll-card"
+                >
+                  {program.image ? (
+                    <>
+                      <img 
+                        src={program.image} 
+                        alt={program.name}
+                        className="program-scroll-image"
+                      />
+                      <div className="program-scroll-overlay"></div>
+                      <div className="program-scroll-content">
+                        <span className="program-scroll-track">{program.track}</span>
+                        <h3 className="program-scroll-name">{program.name}</h3>
+                        <p className="program-scroll-description">{program.description}</p>
+                        <span className="program-scroll-audience">{program.audience}</span>
+                      </div>
+                    </>
+                  ) : (
+                    <div className="program-scroll-placeholder">
+                      <span className="material-symbols-outlined program-placeholder-icon">{program.icon || 'groups'}</span>
+                      <span className="program-track">{program.track}</span>
+                      <h3 className="program-placeholder-title">{program.name}</h3>
+                      <p className="program-scroll-description">{program.description}</p>
+                      <span className="program-scroll-audience">{program.audience}</span>
+                    </div>
+                  )}
+                </Link>
+              ))}
+            </div>
           </div>
         </div>
       </section>
@@ -259,22 +425,73 @@ function Home() {
         </div>
       </section>
 
-      {/* Statistics Section */}
-      <section className="stats-section">
-        <div className="container">
-          <div className="stats-grid">
-            <div className="stat-item">
-              <span className="stat-number">2k+</span>
-              <p className="stat-label">Active Members</p>
+      {/* Community Impact Section */}
+      <section className="community-impact-section">
+        <div className="container community-impact-container">
+          <h2 className="community-impact-headline">
+            Be part of a community like no other and get the true{' '}
+            <span className="highlight-orange">creator experience.</span>{' '}
+            Girls Who Yap strongly embodies the values of{' '}
+            <span className="highlight-purple">inclusivity and diversity.</span>
+          </h2>
+          <div className="stats-grid-new">
+            <div className="stat-card-new">
+              <span className="stat-number-new">10k+</span>
+              <p className="stat-label-new">overall hacker reach</p>
             </div>
-            <div className="stat-item">
-              <span className="stat-number">50+</span>
-              <p className="stat-label">Industry Speakers</p>
+            <div className="stat-card-new">
+              <span className="stat-number-new">55+</span>
+              <p className="stat-label-new">countries global community</p>
             </div>
-            <div className="stat-item">
-              <span className="stat-number">10+</span>
-              <p className="stat-label">Countries</p>
+            <div className="stat-card-new">
+              <span className="stat-number-new">60+</span>
+              <p className="stat-label-new">workshops provided</p>
             </div>
+            <div className="stat-card-new">
+              <span className="stat-number-new">590+</span>
+              <p className="stat-label-new">innovative projects built</p>
+            </div>
+            <div className="stat-card-new">
+              <span className="stat-number-new">24+</span>
+              <p className="stat-label-new">successful events conducted</p>
+            </div>
+            <div className="stat-card-new">
+              <span className="stat-number-new">290+</span>
+              <p className="stat-label-new">universities connected</p>
+            </div>
+            <div className="stat-card-new">
+              <span className="stat-number-new">15k+</span>
+              <p className="stat-label-new">overall social media reach</p>
+            </div>
+            <div className="stat-card-new">
+              <span className="stat-number-new">62+</span>
+              <p className="stat-label-new">trusted partners & sponsors</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Partners Section */}
+      <section className="partners-section">
+        <div className="container partners-container">
+          <h2 className="partners-title">Partners in doing good</h2>
+          <div className="partners-grid">
+            {partners.map((partner, index) => (
+              <div key={index} className="partner-card">
+                <img 
+                  src={partner.logo} 
+                  alt={partner.name}
+                  className="partner-logo-img"
+                  onError={(e) => {
+                    e.target.style.display = 'none';
+                    e.target.nextSibling.style.display = 'flex';
+                  }}
+                />
+                <div className="partner-logo-fallback" style={{ display: 'none' }}>
+                  {partner.name}
+                </div>
+              </div>
+            ))}
           </div>
         </div>
       </section>

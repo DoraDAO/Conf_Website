@@ -1,10 +1,14 @@
 import { Link } from 'react-router-dom';
 import { useState, useEffect, useRef } from 'react';
 import './Home.css';
+import image from "../assets/image.png"
+import GirlsWhoYap from "../assets/GirlsWhoYap.png"
 
 function Home() {
   const [scrollY, setScrollY] = useState(0);
   const [isVisible, setIsVisible] = useState(false);
+  const [communityImpactProgress, setCommunityImpactProgress] = useState(0);
+  const [poweredByTitleProgress, setPoweredByTitleProgress] = useState(0);
   const scrollContainerRef = useRef(null);
   const scrollAnimationRef = useRef(null);
 
@@ -188,33 +192,172 @@ function Home() {
   ];
 
   const partners = [
-    { name: 'DoraDAO', logo: '/partners/doradao.png' },
-    { name: 'Google', logo: '/partners/google.png' },
-    { name: 'Microsoft', logo: '/partners/microsoft.png' },
-    { name: 'GitHub', logo: '/partners/github.png' },
-    { name: 'AWS', logo: '/partners/aws.png' },
-    { name: 'Meta', logo: '/partners/meta.png' },
-    { name: 'Stripe', logo: '/partners/stripe.png' },
-    { name: 'Vercel', logo: '/partners/vercel.png' },
-    { name: 'Netlify', logo: '/partners/netlify.png' },
-    { name: 'MongoDB', logo: '/partners/mongodb.png' },
-    { name: 'Postman', logo: '/partners/postman.png' },
-    { name: 'Figma', logo: '/partners/figma.png' },
-    { name: 'Notion', logo: '/partners/notion.png' },
-    { name: 'Linear', logo: '/partners/linear.png' },
-    { name: 'Cloudflare', logo: '/partners/cloudflare.png' },
-    { name: 'Twilio', logo: '/partners/twilio.png' },
-    { name: 'SendGrid', logo: '/partners/sendgrid.png' },
-    { name: 'Auth0', logo: '/partners/auth0.png' },
-    { name: 'Okta', logo: '/partners/okta.png' },
-    { name: 'Databricks', logo: '/partners/databricks.png' },
-    { name: 'Snowflake', logo: '/partners/snowflake.png' },
-    { name: 'Tableau', logo: '/partners/tableau.png' },
-    { name: 'Looker', logo: '/partners/looker.png' },
-    { name: 'Segment', logo: '/partners/segment.png' },
-    { name: 'Polygon', logo: '/partners/polygon.png' },
-  ];
+  { name: 'DoraDAO', logo: 'https://cdn.simpleicons.org/dora' }, // closest available
+  { name: 'Google', logo: 'https://cdn.simpleicons.org/google' },
+  { name: 'Microsoft', logo: 'https://cdn.simpleicons.org/microsoft' },
+  { name: 'GitHub', logo: 'https://cdn.simpleicons.org/github' },
+  { name: 'AWS', logo: 'https://cdn.simpleicons.org/amazonaws' },
+  { name: 'Meta', logo: 'https://cdn.simpleicons.org/meta' },
+  { name: 'Stripe', logo: 'https://cdn.simpleicons.org/stripe' },
+  { name: 'Vercel', logo: 'https://cdn.simpleicons.org/vercel' },
+  { name: 'Netlify', logo: 'https://cdn.simpleicons.org/netlify' },
+  { name: 'MongoDB', logo: 'https://cdn.simpleicons.org/mongodb' },
+  { name: 'Postman', logo: 'https://cdn.simpleicons.org/postman' },
+  { name: 'Figma', logo: 'https://cdn.simpleicons.org/figma' },
+  { name: 'Notion', logo: 'https://cdn.simpleicons.org/notion' },
+  { name: 'Linear', logo: 'https://cdn.simpleicons.org/linear' },
+  { name: 'Cloudflare', logo: 'https://cdn.simpleicons.org/cloudflare' },
+  { name: 'Twilio', logo: 'https://cdn.simpleicons.org/twilio' },
+  { name: 'SendGrid', logo: 'https://cdn.simpleicons.org/sendgrid' },
+  { name: 'Auth0', logo: 'https://cdn.simpleicons.org/auth0' },
+  { name: 'Okta', logo: 'https://cdn.simpleicons.org/okta' },
+  { name: 'Databricks', logo: 'https://cdn.simpleicons.org/databricks' },
+  { name: 'Snowflake', logo: 'https://cdn.simpleicons.org/snowflake' },
+  { name: 'Tableau', logo: 'https://cdn.simpleicons.org/tableau' },
+  { name: 'Looker', logo: 'https://cdn.simpleicons.org/looker' },
+  { name: 'Segment', logo: 'https://cdn.simpleicons.org/segment' },
+  { name: 'Polygon', logo: 'https://cdn.simpleicons.org/polygon' }
+];
 
+
+
+const textStart = 0;
+const textEnd = 500;
+
+const imageStart = textEnd;
+const imageEnd = 900; // shorter = faster image entry
+
+// Text progress (0 → 1)
+const textProgress = Math.min(
+  Math.max((scrollY - textStart) / (textEnd - textStart), 0),
+  1
+);
+
+// Image progress (0 → 1) — locked until text completes
+const imageProgress =
+  scrollY < textEnd
+    ? 0
+    : Math.min(
+        (scrollY - imageStart) / (imageEnd - imageStart),
+        1
+      );
+
+// Controls where text STOPS
+const TEXT_STOP = 420; // tweak to match sentence width
+
+
+
+const visualRef = useRef(null);
+  const poweredByImageRef = useRef(null);
+  const [poweredByImageProgress, setPoweredByImageProgress] = useState(0);
+
+  useEffect(() => {
+    const visual = visualRef.current;
+    if (!visual) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          visual.classList.add("in-view");
+        }
+      },
+      { threshold: 0.35 }
+    );
+
+    observer.observe(visual);
+
+    return () => observer.disconnect();
+  }, []);
+
+  // Scroll animation for Powered By image
+  useEffect(() => {
+    const handlePoweredByScroll = () => {
+      if (!poweredByImageRef.current) return;
+      
+      const element = poweredByImageRef.current;
+      const rect = element.getBoundingClientRect();
+      const windowHeight = window.innerHeight;
+      
+      // Calculate progress based on element position
+      // Start animation when element is near viewport
+      const startTrigger = windowHeight * 0.8;
+      const endTrigger = windowHeight * 0.2;
+      
+      if (rect.top < startTrigger && rect.bottom > endTrigger) {
+        // Element is in view range
+        const progress = Math.min(
+          Math.max(
+            (startTrigger - rect.top) / (startTrigger - endTrigger),
+            0
+          ),
+          1
+        );
+        setPoweredByImageProgress(progress);
+      }
+    };
+
+    window.addEventListener('scroll', handlePoweredByScroll, { passive: true });
+    handlePoweredByScroll(); // Initial check
+    
+    return () => window.removeEventListener('scroll', handlePoweredByScroll);
+  }, []);
+
+  // Scroll animation for Community Impact Section
+  useEffect(() => {
+    const handleCommunityImpactScroll = () => {
+      const section = document.querySelector('.community-impact-section');
+      if (!section) return;
+      
+      const rect = section.getBoundingClientRect();
+      const windowHeight = window.innerHeight;
+      
+      // Calculate progress (0-1) based on scroll position
+      const startTrigger = windowHeight * 0.8;
+      const endTrigger = windowHeight * 0.2;
+      
+      if (rect.top < startTrigger && rect.bottom > 0) {
+        const progress = Math.min(
+          Math.max((startTrigger - rect.top) / (windowHeight * 0.6), 0),
+          1
+        );
+        setCommunityImpactProgress(progress);
+      }
+    };
+
+    window.addEventListener('scroll', handleCommunityImpactScroll, { passive: true });
+    handleCommunityImpactScroll();
+    
+    return () => window.removeEventListener('scroll', handleCommunityImpactScroll);
+  }, []);
+
+  // Scroll animation for Powered By Title
+  useEffect(() => {
+    const handlePoweredByTitleScroll = () => {
+      const title = document.querySelector('.powered-by-title');
+      if (!title) return;
+      
+      const rect = title.getBoundingClientRect();
+      const windowHeight = window.innerHeight;
+      
+      // Slower, more gradual reveal
+      const startTrigger = windowHeight * 0.85;
+      const endTrigger = windowHeight * 0.3;
+      
+      if (rect.top < startTrigger && rect.bottom > 0) {
+        const progress = Math.min(
+          Math.max((startTrigger - rect.top) / (windowHeight * 0.8), 0),
+          1
+        );
+        setPoweredByTitleProgress(progress);
+      }
+    };
+
+    window.addEventListener('scroll', handlePoweredByTitleScroll, { passive: true });
+    handlePoweredByTitleScroll();
+    
+    return () => window.removeEventListener('scroll', handlePoweredByTitleScroll);
+  }, []);
+  
   return (
     <div className="home">
       {/* Floating Background Shapes */}
@@ -224,57 +367,106 @@ function Home() {
         <div className="floating-shape shape-3"></div>
       </div>
 
-      {/* Hero Section */}
+      
+ {/* Hero Section */}
       <section className="hero-section">
-        <div className="hero-background-text">Girls Who Yap</div>
+        {/* Background Image */}
+        <div className="hero-background-image">
+          <img src={GirlsWhoYap} alt="" />
+        </div>
+       
         <div className="container hero-container">
           <div className="hero-content-left">
             <h1 className="hero-title">
               <div className="hero-title-line">
-                <span className="hero-title-girls">Girls</span>
+                <span className="hero-title-girls">Yap freely. Grow together.</span>
               </div>
               <div className="hero-title-line">
-                <span className="hero-title-who">Who</span>{' '}
-                <span className="hero-title-yap">Yap</span>
+                <span className="hero-title-yap">girls who yap</span>
               </div>
             </h1>
             <p className="hero-description">
               Welcome to Girls Who Yap! Join one of India's most thriving communities to build groundbreaking solutions, inspire problem-solvers, and grow together in a diverse, supportive environment powered by DoraDAO.
             </p>
           </div>
-          <div 
-            className="hero-accent-circle"
-            style={{
-              transform: `translateY(${Math.min(scrollY * 0.4, 200)}px) translateX(${Math.sin(scrollY * 0.01) * 20}px) rotate(${scrollY * 0.15}deg) scale(${Math.max(1 - scrollY * 0.0008, 0.7)})`,
-              opacity: isVisible ? Math.max(1 - scrollY * 0.0015, 0.3) : 0.5,
-              filter: `blur(${Math.min(scrollY * 0.01, 3)}px)`
-            }}
-          >
-            <img 
-              src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQPcMfyIrX0OFbqlU3_yRaiIj9gRYtoPILNGQ&s"
-              alt="Three faceless women with microphone"
-              className="hero-circle-image"
-              onError={(e) => {
-                e.target.style.display = 'none';
-              }}
-            />
-            <div className="circle-overlay"></div>
-          </div>
+  <div  >
+  <div
+  className="scroll-acent-bg-text"
+  style={{
+    transform: `translateX(${textProgress * 600}px)`,
+    opacity: textProgress,
+  }}
+>
+  Girls Who Yap
+</div>
+
+<div
+  className="scroll-accent-circle"
+  style={{
+    transform: `translateX(${(1 - imageProgress) * 100}%) 
+                rotate(${imageProgress * 36}deg) 
+                scale(${1 - imageProgress * 0.2})`,
+    opacity: imageProgress,
+  }}
+>
+  <a href="https://discord.gg/cNckZxYn" target="_blank" rel="noopener noreferrer">
+    <img src={image} className="hero-circle-image" />
+  </a>
+
+  <div className="circle-overlay" />
+</div>
+
+
+</div>
         </div>
       </section>
+
+
+     
 
       {/* Powered By Section */}
       <section className="powered-by-section">
         <div className="container powered-by-container">
+          <div 
+            className="powered-by-visual" 
+            ref={poweredByImageRef}
+            style={{
+              transform: `translateX(${-100 + (poweredByImageProgress * 100)}px)`,
+              opacity: poweredByImageProgress,
+            }}
+          >
+            <div className="illustration-circle-wrapper">
+              <div className="illustration-circle">
+                <img 
+                  alt="Creative team" 
+                  className="illustration-image"
+                  src="https://lh3.googleusercontent.com/aida-public/AB6AXuAi39LlNNCil7Zxq7hu3fkCNJesxrnmo1VWcQYgr1ekmGB9kjD2gzj4_JhP3qasnpCIsMDzI0mXQ6eNu0nZSehdd-Q1FSBc4-U3B_tYHVCPK7TDb9pHfW37nMhrUYvJ6VZb-ccinEJ9SUx3VCKlUzWhSvSKzHul532_N9pNchUj_WkF40Iekivgko6-0fM2SXjk6u8a2326Nrgcv1J3oljCS5g2td0_JDcVKoo5MxbGO0WVhmernldIFxxI0kjrX0bVpLfBTBN_lLL_"
+                />
+                <div className="illustration-overlay"></div>
+              </div>
+            </div>
+          </div>
           <div className="powered-by-content">
             <div className="section-label-wrapper">
               <span className="label-line"></span>
               <span className="section-label">Our Ecosystem</span>
             </div>
+           
             <h2 className="powered-by-title">
-              We are not just a <br/>
-              <span className="text-primary italic script-font">community</span>
+              <span 
+                className="title-part title-part-1"
+                style={{ opacity: Math.min(poweredByTitleProgress * 2, 1) }}
+              >
+                We are not just a <br/>
+              </span>
+              <span 
+                className="title-part title-part-2"
+                style={{ opacity: Math.min(Math.max((poweredByTitleProgress - 0.4) * 2.5, 0), 1) }}
+              >
+                <span className="text-primary italic script-font">community</span>
+              </span>
             </h2>
+            
             <p className="powered-by-description">
               DoraDAO is the decentralized autonomous organization building the infrastructure for community-led movements. We're more than a conference; we're a permanent home for the next generation of female tech pioneers.
             </p>
@@ -288,18 +480,6 @@ function Home() {
                 <span className="material-symbols-outlined card-icon">language</span>
                 <h3>GLOBAL IMPACT</h3>
                 <p>Bridging creators across 10+ countries and diverse industries.</p>
-              </div>
-            </div>
-          </div>
-          <div className="powered-by-visual">
-            <div className="illustration-circle-wrapper">
-              <div className="illustration-circle">
-                <img 
-                  alt="Creative team" 
-                  className="illustration-image"
-                  src="https://lh3.googleusercontent.com/aida-public/AB6AXuAi39LlNNCil7Zxq7hu3fkCNJesxrnmo1VWcQYgr1ekmGB9kjD2gzj4_JhP3qasnpCIsMDzI0mXQ6eNu0nZSehdd-Q1FSBc4-U3B_tYHVCPK7TDb9pHfW37nMhrUYvJ6VZb-ccinEJ9SUx3VCKlUzWhSvSKzHul532_N9pNchUj_WkF40Iekivgko6-0fM2SXjk6u8a2326Nrgcv1J3oljCS5g2td0_JDcVKoo5MxbGO0WVhmernldIFxxI0kjrX0bVpLfBTBN_lLL_"
-                />
-                <div className="illustration-overlay"></div>
               </div>
             </div>
           </div>
@@ -429,10 +609,20 @@ function Home() {
       <section className="community-impact-section">
         <div className="container community-impact-container">
           <h2 className="community-impact-headline">
-            Be part of a community like no other and get the true{' '}
-            <span className="highlight-orange">creator experience.</span>{' '}
-            Girls Who Yap strongly embodies the values of{' '}
-            <span className="highlight-purple">inclusivity and diversity.</span>
+            <span 
+              className="headline-part headline-part-1"
+              style={{ opacity: Math.min(communityImpactProgress * 3, 1) }}
+            >
+              Be part of a community like no other and get the true{' '}
+              <span className="highlight-orange">creator experience.</span>{' '}
+            </span>
+            <span 
+              className="headline-part headline-part-2"
+              style={{ opacity: Math.min(Math.max((communityImpactProgress - 0.3) * 3, 0), 1) }}
+            >
+              Girls Who Yap strongly embodies the values of{' '}
+              <span className="highlight-purple">inclusivity and diversity.</span>
+            </span>
           </h2>
           <div className="stats-grid-new">
             <div className="stat-card-new">

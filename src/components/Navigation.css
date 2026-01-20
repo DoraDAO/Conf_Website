@@ -1,6 +1,8 @@
-/* Static Logo on Left */
+/* ========================= */
+/* Static Logo (Top Left) */
+/* ========================= */
 .static-logo {
-  position: fixed;
+  position: absolute;
   top: 2rem;
   left: 2rem;
   z-index: 200;
@@ -28,7 +30,6 @@
   font-weight: 800;
   text-transform: uppercase;
   letter-spacing: -0.02em;
-  color: var(--deep-charcoal);
   line-height: 1;
 }
 
@@ -36,111 +37,63 @@
   .logo-brace {
     font-size: 2rem;
   }
-  
   .logo-text-main {
     font-size: 2rem;
   }
 }
 
-/* Collapsible Navbar */
+/* ========================= */
+/* Floating Navbar (Right) */
+/* ========================= */
 .nav-header {
   position: fixed;
   top: 2rem;
   right: 2rem;
   z-index: 150;
-  transition: all 0.3s ease;
+  opacity: 0;
+  transform: translateY(-12px) scale(0.96);
+  transition: opacity 0.35s ease, transform 0.35s ease;
 }
 
 .nav-header.nav-collapsed {
-  top: 2rem;
-  right: 2rem;
+  opacity: 1;
+  transform: translateY(0) scale(1);
 }
 
-.nav-header.nav-open {
-  top: 2rem;
-  right: 2rem;
-}
-
-/* Hamburger Icon Button (when collapsed) */
-.nav-toggle-btn {
-  width: 72px;
-  height: 72px;
-  border-radius: 50%;
-  border: 2px solid var(--deep-charcoal);
-  background: white;
+/* ========================= */
+/* Glass Pill Container */
+/* ========================= */
+.nav-pill {
   display: flex;
   align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  padding: 0;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  background: rgba(255, 255, 255, 0.6);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-radius: 9999px;
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
+  padding: 14px 26px;
 }
 
-.nav-toggle-btn:hover {
-  background: var(--primary);
-  border-color: var(--primary);
-  transform: scale(1.05);
-}
-
-.hamburger-icon {
-  width: 28px;
-  height: 22px;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-}
-
-.hamburger-icon span {
-  display: block;
-  width: 100%;
-  height: 4px;
-  background: var(--deep-charcoal);
-  border-radius: 2px;
-  transition: all 0.3s ease;
-}
-
-.nav-toggle-btn:hover .hamburger-icon span {
-  background: var(--deep-charcoal);
-}
-
-/* Full Navigation Menu (when open) */
+/* ========================= */
+/* Full Menu */
+/* ========================= */
 .nav-menu-full {
   display: flex;
   align-items: center;
-  gap: 3rem;
-  background: white;
-  border: 2px solid var(--deep-charcoal);
-  border-radius: 9999px;
-  padding: 1.25rem 2.5rem;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
-  animation: slideIn 0.3s ease;
-  flex-wrap: nowrap;
-  overflow: visible;
-}
-
-@keyframes slideIn {
-  from {
-    opacity: 0;
-    transform: translateY(-10px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  gap: 2.5rem;
+  white-space: nowrap;
 }
 
 .nav-menu-full a {
-  font-size: 1rem;
+  font-size: 0.85rem;
   font-weight: 700;
   color: var(--deep-charcoal);
   text-decoration: none;
-  transition: color 0.3s ease;
   text-transform: uppercase;
-  letter-spacing: 0.1em;
-  font-family: 'Spline Sans', sans-serif;
+  letter-spacing: 0.12em;
   position: relative;
-  padding: 0.5rem 0;
+  font-family: 'Spline Sans', sans-serif;
 }
 
 .nav-menu-full a:hover {
@@ -154,7 +107,7 @@
 .nav-menu-full a.active::after {
   content: '';
   position: absolute;
-  bottom: 0;
+  bottom: -6px;
   left: 0;
   right: 0;
   height: 2px;
@@ -162,60 +115,85 @@
   border-radius: 2px;
 }
 
+/* ========================= */
+/* CTA Button */
+/* ========================= */
 .nav-cta-btn {
-  font-size: 0.875rem;
-  font-weight: 700;
-  color: white !important;
-  background: var(--deep-charcoal) !important;
-  text-decoration: none;
-  padding: 0.875rem 5.5rem;
+  margin-left: 1rem;
+  padding: 0.6rem 1.8rem;
   border-radius: 9999px;
-  transition: all 0.3s ease;
+  background: var(--deep-charcoal);
+  color: white !important;
+  font-size: 0.75rem;
+  font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.08em;
-  font-family: 'Spline Sans', sans-serif;
-  margin-left: 1rem;
+  text-decoration: none;
   white-space: nowrap;
-  display: inline-block;
-  flex-shrink: 0;
-  border: none;
-  cursor: pointer;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
 .nav-cta-btn:hover {
-  background: var(--deep-charcoal) !important;
-  color: white !important;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
   transform: translateY(-1px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.25);
 }
 
-.nav-close-btn {
-  width: 40px;
-  height: 40px;
+/* ========================= */
+/* Hamburger Button */
+/* ========================= */
+.nav-toggle-btn {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
   border: none;
   background: transparent;
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
-  color: var(--deep-charcoal);
-  padding: 0;
-  margin-left: 1.5rem;
-  transition: all 0.3s ease;
+}
+
+.hamburger-icon {
+  width: 22px;
+  height: 16px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.hamburger-icon span {
+  width: 100%;
+  height: 2px;
+  background: var(--deep-charcoal);
+  border-radius: 2px;
+}
+
+/* ========================= */
+/* Close Button */
+/* ========================= */
+.nav-close-btn {
+  margin-left: 1.25rem;
+  width: 36px;
+  height: 36px;
   border-radius: 50%;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  font-size: 1.2rem;
+  color: var(--deep-charcoal);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s ease;
 }
 
 .nav-close-btn:hover {
-  color: var(--primary);
-  background: rgba(231, 171, 60, 0.1);
+  background: rgba(0, 0, 0, 0.08);
 }
 
-.nav-close-btn .material-symbols-outlined {
-  font-size: 24px;
-}
-
-/* Show/hide based on scroll state */
+/* ========================= */
+/* Visibility Rules */
+/* ========================= */
 .nav-header:not(.nav-collapsed) .nav-menu-full {
   display: flex;
 }
@@ -236,68 +214,30 @@
   display: none;
 }
 
+/* ========================= */
 /* Responsive */
-@media (max-width: 1024px) {
-  .nav-menu-full {
-    gap: 2rem;
-    padding: 1.125rem 2rem;
-  }
-  
-  .nav-menu-full a {
-    font-size: 0.875rem;
-  }
-  
-  .nav-cta-btn {
-    font-size: 0.75rem;
-    padding: 0.625rem 1.5rem;
-  }
-}
-
+/* ========================= */
 @media (max-width: 768px) {
   .static-logo {
     top: 1.5rem;
     left: 1.5rem;
   }
-  
+
   .nav-header {
     top: 1.5rem;
     right: 1.5rem;
   }
-  
-  .nav-toggle-btn {
-    width: 64px;
-    height: 64px;
-  }
-  
-  .hamburger-icon {
-    width: 24px;
-    height: 18px;
-  }
-  
+
   .nav-menu-full {
-    flex-wrap: wrap;
-    gap: 1.5rem;
-    padding: 1rem 1.5rem;
-    max-width: calc(100vw - 3rem);
+    gap: 1.6rem;
   }
-  
+
   .nav-menu-full a {
-    font-size: 0.8125rem;
-  }
-  
-  .nav-cta-btn {
     font-size: 0.75rem;
-    padding: 0.625rem 3.5rem;
-    margin-left: 0;
-    width: 100%;
-    text-align: center;
   }
-  
-  .logo-brace {
-    font-size: 1.25rem;
-  }
-  
-  .logo-text-main {
-    font-size: 1.25rem;
+
+  .nav-cta-btn {
+    padding: 0.6rem 1.4rem;
+    font-size: 0.7rem;
   }
 }

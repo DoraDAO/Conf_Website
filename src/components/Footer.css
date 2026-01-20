@@ -1,5 +1,5 @@
 .footer {
-  background: var(--background-light);
+  background: #1a1a1a;
   padding: 10rem 1.5rem 5rem;
 }
 
@@ -57,12 +57,12 @@
   text-transform: uppercase;
   font-family: 'Spline Sans', sans-serif;
   letter-spacing: -0.02em;
-  color: var(--deep-charcoal);
+  color: #ffffff;
 }
 
 .footer-mission {
   font-size: 1.25rem;
-  color: var(--accent-brown);
+  color: rgba(255, 255, 255, 0.7);
   max-width: 24rem;
   margin-bottom: 3rem;
   line-height: 1.75;
@@ -132,11 +132,11 @@
 .footer-section ul li {
   font-size: 1.125rem;
   font-weight: 700;
-  color: var(--accent-brown);
+  color: rgba(255, 255, 255, 0.8);
 }
 
 .footer-section ul li a {
-  color: var(--accent-brown);
+  color: rgba(255, 255, 255, 0.8);
   text-decoration: none;
   transition: color 0.3s;
 }
@@ -146,7 +146,7 @@
 }
 
 .footer-bottom {
-  border-top: 1px solid #e5e5e5;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
   padding-top: 3rem;
   display: flex;
   flex-direction: column;
@@ -163,7 +163,7 @@
 
 .footer-bottom p {
   font-size: 0.875rem;
-  color: rgba(138, 122, 111, 0.7);
+  color: rgba(255, 255, 255, 0.5);
   font-weight: 800;
   text-transform: uppercase;
   letter-spacing: 0.1em;
@@ -177,7 +177,7 @@
 
 .footer-links a {
   font-size: 0.875rem;
-  color: rgba(138, 122, 111, 0.7);
+  color: rgba(255, 255, 255, 0.5);
   font-weight: 800;
   text-transform: uppercase;
   letter-spacing: 0.1em;
